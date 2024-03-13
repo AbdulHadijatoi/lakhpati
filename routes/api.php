@@ -20,7 +20,11 @@ Route::group(['prefix'=>'v1'],function(){
     Route::post('register', [AuthController::class,'register']);
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    // Add more protected routes here...
+});

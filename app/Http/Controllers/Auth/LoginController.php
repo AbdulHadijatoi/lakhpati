@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
-class RegisterController extends Controller
+class LoginController extends Controller
 {
-    public function register(Request $request)
+    public function showAdminLogin(Request $request) {
+        return view('auth.login');
+    }
+
+    public function login(Request $request) {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('/dashboard');
+        }
+
+        return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
+    public function logout(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
+        Auth::logout();
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        $request->session()->invalidate();
 
-        $user = User::create($validatedData);
+        $request->session()->regenerateToken();
 
-        $token = $user->createToken('MyApp')->accessToken;
-
-        return response()->json(['token' => $token], 201);
+        return redirect('/');
     }
 }

@@ -10,6 +10,8 @@ class CreateContestsTable extends Migration
     {
         Schema::create('contests', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
             $table->string('winner_prize');
             $table->string('runner_up_prize');
             $table->timestamps();

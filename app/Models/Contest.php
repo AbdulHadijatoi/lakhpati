@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Contest extends Model
 {
     use HasFactory;
-    protected $fillable = ['winner_prize', 'runner_up_prize'];
+    protected $fillable = ['title', 'description', 'winner_prize', 'runner_up_prize'];
 
     public function contestDetails(): HasMany
     {
