@@ -23,7 +23,29 @@
         <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),]) !!};</script>
     </head>
     <body>
-       
+        @if ($errors->any())
+        <div class="col-12" style="position: fixed; top:0px; left:0px;">
+            <div class="alert alert-danger alert-dismissible m-0" role="alert">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @endif
+
+        @if (session('success'))
+        <div class="col-12" style="position: fixed; top:0px; left:0px;">
+            <div class="alert alert-success alert-dismissible m-0" role="alert">
+                <p class="mb-0">
+                    {{ session('success') }}
+                </p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @endif
         <div id="page-container" class="sidebar-o enable-page-overlay sidebar-dark side-scroll page-header-fixed main-content-narrow">
             <aside id="side-overlay" class="fs-sm">
                 <div class="content-header border-bottom">

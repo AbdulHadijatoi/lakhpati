@@ -20,6 +20,7 @@ class LoginController extends Controller
         }
 
         return back()->withErrors(['email' => 'Invalid credentials']);
+        // return back()->withSuccess('Success credentials');
     }
 
     public function logout(Request $request)

@@ -31,34 +31,10 @@
     <!-- Page Content -->
     <div class="content">
         <div class="row row-deck">
-            <div class="col-md-6 col-xl-4">
+            <div class="col-12">
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
                         <h3 class="block-title">Welcome</h3>
-                    </div>
-                    <div class="block-content fs-sm text-muted">
-                        <p>
-                            ...
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-4">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">Block Title</h3>
-                    </div>
-                    <div class="block-content fs-sm text-muted">
-                        <p>
-                            ...
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-4">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">Block Title</h3>
                     </div>
                     <div class="block-content fs-sm text-muted">
                         <p>

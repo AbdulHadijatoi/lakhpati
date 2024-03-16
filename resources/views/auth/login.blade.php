@@ -12,9 +12,9 @@
                 <div class="block-content">
                   <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5 text-center">
                     <h1 class="h4 mb-1">LAKHPATI</h1>
-                    {{-- <p class="fw-medium text-muted">
-                      Welcome back <strong>Abid</strong>, please login
-                    </p> --}}
+                    <p class="fw-small text-muted">
+                      Welcome back, please login
+                    </p>
 
                     <form method="POST" action="{{route('loginPost')}}">
                       @csrf
