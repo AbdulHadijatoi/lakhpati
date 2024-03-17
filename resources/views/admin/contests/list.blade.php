@@ -34,32 +34,37 @@
                 </h3>
             </div>
             <div class="block-content block-content-full">
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
+                <table class="table table-bordered table-striped table-vcenter fs-sm">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 80px;">#</th>
-                            <th>Name</th>
-                            <th class="d-none d-sm-table-cell" style="width: 30%;">Email</th>
-                            <th style="width: 15%;">Registered</th>
+                            <th>Winner Prize</th>
+                            <th>Runner-up Prize</th>
+                            <th>Total Winners</th>
+                            <th>Total Runner-ups</th>
+                            <th>Participants Limit</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Entry Fee</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @for ($i = 1; $i < 21; $i++)
+                        @foreach($contests as $contest)
                         <tr>
-                            <td class="text-center">{{ $i }}</td>
-                            <td class="fw-semibold">
-                                <a href="javascript:void(0)">John Smith</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client{{ $i }}<em class="text-muted">@example.com</em>
-                            </td>
-                            <td>
-                                <em class="text-muted">{{ rand(2, 10) }} days ago</em>
-                            </td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $contest->winner_prize }}</td>
+                            <td>{{ $contest->runner_up_prize }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->total_winners:'-' }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->total_runner_ups:'-' }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->participants_limit:'-' }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->start_date:'-' }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->end_date:'-' }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->entry_fee:'-' }}</td>
                         </tr>
-                        @endfor
+                        @endforeach
                     </tbody>
                 </table>
+                {{ $contests->links() }}
             </div>
         </div>
     </div>

@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Contest extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'description', 'winner_prize', 'runner_up_prize'];
 
-    public function contestDetails(): HasMany
+    public function contestDetails(): HasOne
     {
-        return $this->hasMany(ContestDetails::class);
+        return $this->hasOne(ContestDetails::class,'contest_id');
     }
 
     public function winners()

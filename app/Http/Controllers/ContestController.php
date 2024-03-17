@@ -9,7 +9,17 @@ use Illuminate\Support\Facades\Auth;
 class ContestController extends AppBaseController {
     
     public function index(Request $request) {
-        return view('admin.contests.list');
+        $perPage = $request->input('perPage', 10);
+        $search = $request->input('search');
+
+        $contests = Contest::with('contestDetails')
+                    ->when($search, function ($query) use ($search) {
+                        $query->where('winner_prize', 'like', "%$search%")
+                              ->orWhere('runner_up_prize', 'like', "%$search%");
+                    })
+                    ->paginate($perPage);
+
+        return view('admin.contests.list', compact('contests'));
     }
     
     public function view($id = null) {
