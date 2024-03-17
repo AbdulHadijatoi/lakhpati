@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Contest extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'winner_prize', 'runner_up_prize'];
+    protected $fillable = ['title', 'description', 'winner_prize', 'runner_up_prize','status'];
 
     public function contestDetails(): HasOne
     {
@@ -20,5 +20,10 @@ class Contest extends Model
     public function winners()
     {
         return $this->hasMany(Winner::class);
+    }
+    
+    public function participants()
+    {
+        return $this->hasMany(Contest::class,'contest_id');
     }
 }

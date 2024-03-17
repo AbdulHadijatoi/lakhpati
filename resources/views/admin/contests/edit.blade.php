@@ -1,73 +1,63 @@
 @extends('layouts.backend')
 
 @section('content')
-    <!-- Hero -->
-    <div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-                <div class="flex-grow-1">
-                    <h1 class="h3 fw-bold mb-2">
-                        Main Title
-                    </h1>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                        Subtitle
-                    </h2>
-                </div>
-                <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb breadcrumb-alt">
-                        <li class="breadcrumb-item">
-                            <a class="link-fx" href="javascript:void(0)">Examples</a>
-                        </li>
-                        <li class="breadcrumb-item" aria-current="page">
-                            Blank
-                        </li>
-                    </ol>
-                </nav>
+<div class="content2 p-4">
+    <form action="{{ route('updateContest', [$contest->id]) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Update contest</h3>
             </div>
-        </div>
-    </div>
-    <!-- END Hero -->
+            <div class="block-content block-content-full">
+                <div class="row">
 
-    <!-- Page Content -->
-    <div class="content">
-        <div class="row row-deck">
-            <div class="col-md-6 col-xl-4">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">Block Title</h3>
+                    <div class="form-group col-4 mb-4">
+                        <label class="form-label" for="winner_prize">Winner Prize <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="winner_prize" name="winner_prize" value="{{ $contest->winner_prize }}" required>
                     </div>
-                    <div class="block-content fs-sm text-muted">
-                        <p>
-                            Your content..
-                        </p>
+
+                    <div class="form-group col-4 mb-4">
+                        <label class="form-label" for="runner_up_prize">Runner-up Prize <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="runner_up_prize" name="runner_up_prize" value="{{ $contest->runner_up_prize }}" required>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-4">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">Block Title</h3>
+
+                    <div class="form-group col-4 mb-4">
+                        <label class="form-label" for="total_winners">Total Winners <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="total_winners" name="total_winners" value="{{ $contest->contestDetails->total_winners }}" required>
                     </div>
-                    <div class="block-content fs-sm text-muted">
-                        <p>
-                            Your content..
-                        </p>
+
+                    <div class="form-group col-4 mb-4">
+                        <label class="form-label" for="total_runner_ups">Total Runner-ups <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="total_runner_ups" name="total_runner_ups" value="{{ $contest->contestDetails->total_runner_ups }}" required>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-4">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">Block Title</h3>
+
+                    <div class="form-group col-4 mb-4">
+                        <label class="form-label" for="participants_limit">Participants Limit <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="participants_limit" name="participants_limit" value="{{ $contest->contestDetails->participants_limit }}" required>
                     </div>
-                    <div class="block-content fs-sm text-muted">
-                        <p>
-                            Your content..
-                        </p>
+
+                    <div class="form-group col-4 mb-4">
+                        <label class="form-label" for="start_date">Start Date</label>
+                        <input type="text" class="js-flatpickr form-control" id="start_date" name="start_date" value="{{ $contest->contestDetails->start_date }}" placeholder="Y-m-d">
+                    </div>
+                    
+                    <div class="form-group col-4 mb-4">
+                        <label class="form-label" for="end_date">End Date</label>
+                        <input type="text" class="js-flatpickr form-control" id="end_date" name="end_date" value="{{ $contest->contestDetails->end_date }}" placeholder="Y-m-d">
+                    </div>
+
+                    <div class="form-group col-4 mb-4">
+                        <label class="form-label" for="entry_fee">Entry Fee <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="entry_fee" name="entry_fee" value="{{ $contest->contestDetails->entry_fee }}" required>
+                    </div>
+
+                    <div class="form-group col-12 mb-4">
+                        <button type="submit" class="btn btn-alt-primary col-12">Update Contest</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- END Page Content -->
+    </form>
+</div>
 @endsection

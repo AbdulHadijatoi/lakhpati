@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Participant extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'contest_id'];
+    protected $fillable = ['user_id', 'contest_id','status'];
 
     public function user(): BelongsTo
     {
@@ -18,6 +18,6 @@ class Participant extends Model
 
     public function contest(): BelongsTo
     {
-        return $this->belongsTo(Contest::class);
+        return $this->belongsTo(Contest::class,'contest_id');
     }
 }

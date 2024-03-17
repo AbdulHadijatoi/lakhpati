@@ -26,7 +26,7 @@
 @section('content')
 
 
-    <div class="content">
+    <div class="content2 p-4">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">
@@ -34,7 +34,7 @@
                 </h3>
             </div>
             <div class="block-content block-content-full">
-                <table class="table table-bordered table-striped table-vcenter fs-sm">
+                <table class="table responsive table-bordered table-striped table-vcenter fs-sm">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 80px;">#</th>
@@ -46,6 +46,7 @@
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Entry Fee</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,11 +61,20 @@
                             <td>{{ $contest->contestDetails?$contest->contestDetails->start_date:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->end_date:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->entry_fee:'-' }}</td>
+                            <td>
+                                <a href="{{ route('editContest', $contest->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Edit"><i class="fa fa-pen"></i></a>
+                                <a href="{{ route('showContest', $contest->id) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="View"><i class="fa fa-eye"></i></a>
+                                <form action="{{ route('deleteContest', $contest->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this contest?')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Delete"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                {{ $contests->links() }}
+                <div class="col-12 d-flex justify-content-center">{{ $contests->links() }}</div>
             </div>
         </div>
     </div>

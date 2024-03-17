@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContestController;
+use App\Http\Controllers\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,10 +33,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ContestController::class,'index'])->name('listContests');
         Route::get('get-data', [ContestController::class,'getData']);
         Route::get('create', [ContestController::class,'create'])->name('createContest');
+        Route::get('show/{id}', [ContestController::class,'show'])->name('showContest');
         Route::post('store', [ContestController::class,'store'])->name('contestStore');
-        Route::get('edit', [ContestController::class,'edit'])->name('editContest');
-        Route::put('update', [ContestController::class,'update'])->name('updateContest');
-        Route::put('delete', [ContestController::class,'delete'])->name('deleteContest');
+        Route::get('edit/{id}', [ContestController::class,'edit'])->name('editContest');
+        Route::put('update/{id}', [ContestController::class,'update'])->name('updateContest');
+        Route::delete('delete/{id}', [ContestController::class, 'destroy'])->name('deleteContest');
+    });
+    
+    Route::group(['prefix'=>'participants'], function () {
+        Route::get('/', [ParticipantController::class,'index'])->name('listParticipants');
+        Route::get('show/{id}', [ParticipantController::class,'show'])->name('showParticipant');
+        Route::delete('delete/{id}', [ParticipantController::class, 'destroy'])->name('deleteParticipant');
     });
 
     Route::post('logout', [LoginController::class,'logout'])->name('logout');
