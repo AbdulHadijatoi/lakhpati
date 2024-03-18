@@ -12,7 +12,7 @@
                     <tr>
                         <th>#</th>
                         <th>User Name</th>
-                        <th>Participated in Contest</th>
+                        <th>Contest Name</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -25,7 +25,7 @@
                         <td>{{ $participant->contest ? $participant->contest->title : '-' }}</td>
                         <td>
                             @if($participant->contest && $participant->contest->status)
-                                @if($participant->contest->status == "open")
+                                @if($participant->contest->status == "active")
                                     <span class="btn btn-success">
                                 @else
                                     <span class="btn btn-warning">
@@ -34,9 +34,7 @@
                             @endif
                         </td>
                         <td>
-                            @if($participant->contest)
                             <a href="{{ route('showContest', $participant->contest_id) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="View Contest"><i class="fa fa-eye"></i></a>
-                            @endif
                         </td>
                     </tr>
                     @endforeach

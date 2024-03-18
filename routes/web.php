@@ -39,10 +39,11 @@ Route::middleware('auth')->group(function () {
         Route::put('update/{id}', [ContestController::class,'update'])->name('updateContest');
         Route::delete('delete/{id}', [ContestController::class, 'destroy'])->name('deleteContest');
     });
-    
+    // listContestParticipants
     Route::group(['prefix'=>'participants'], function () {
         Route::get('/', [ParticipantController::class,'index'])->name('listParticipants');
         Route::get('show/{id}', [ParticipantController::class,'show'])->name('showParticipant');
+        Route::get('list-contest-participants/{id}', [ParticipantController::class,'contestParticipants'])->name('listContestParticipants');
         Route::delete('delete/{id}', [ParticipantController::class, 'destroy'])->name('deleteParticipant');
     });
 

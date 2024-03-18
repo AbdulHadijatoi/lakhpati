@@ -32,20 +32,23 @@
                 <h3 class="block-title">
                     Contests <small>Listing</small>
                 </h3>
+                
             </div>
             <div class="block-content block-content-full">
                 <table class="table responsive table-bordered table-striped table-vcenter fs-sm">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 80px;">#</th>
+                            <th>Title</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Winner Prize</th>
                             <th>Runner-up Prize</th>
                             <th>Total Winners</th>
                             <th>Total Runner-ups</th>
                             <th>Participants Limit</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
                             <th>Entry Fee</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -53,14 +56,25 @@
                         @foreach($contests as $contest)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $contest->title }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->start_date:'-' }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->end_date:'-' }}</td>
                             <td>{{ $contest->winner_prize }}</td>
                             <td>{{ $contest->runner_up_prize }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->total_winners:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->total_runner_ups:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->participants_limit:'-' }}</td>
-                            <td>{{ $contest->contestDetails?$contest->contestDetails->start_date:'-' }}</td>
-                            <td>{{ $contest->contestDetails?$contest->contestDetails->end_date:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->entry_fee:'-' }}</td>
+                            <td>
+                                @if($contest->status)
+                                    @if($contest->status == "open")
+                                        <span class="btn small btn-success">
+                                    @else
+                                        <span class="btn btn-warning">
+                                    @endif
+                                    {{ $contest->status ?? '-' }}</span>
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('editContest', $contest->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Edit"><i class="fa fa-pen"></i></a>
                                 <a href="{{ route('showContest', $contest->id) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="View"><i class="fa fa-eye"></i></a>

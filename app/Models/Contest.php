@@ -24,6 +24,6 @@ class Contest extends Model
     
     public function participants()
     {
-        return $this->hasMany(Contest::class,'contest_id');
+        return $this->hasMany(Participant::class,'contest_id');
     }
 }
