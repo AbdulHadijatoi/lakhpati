@@ -22,9 +22,10 @@ class EasypaisaController extends AppBaseController{
     protected $hashKey = 'EVB39B3S9LGTDEK5';
 
     public function doCheckout(Request $request) {
+        // Define the URLs for confirmation and status check
         $checkoutConfirm = url('checkout-confirm');
         $paymentStatus = url('payment-status');
-
+    
         // Example product data (this would typically come from the request or database)
         $product = ['name' => 'New product', 'price' => '20.0'];
     
@@ -36,10 +37,11 @@ class EasypaisaController extends AppBaseController{
         $dateTime = new DateTime();
         $orderRefNum = $dateTime->format('YmdHis');
     
+        // Set expiry date (1 hour from current time)
         $expiryDateTime = (clone $dateTime)->modify('+1 hours');
         $expiryDate = $expiryDateTime->format('Ymd His');
     
-        // Prepare the post data for Easypaisa API
+        // Prepare the post data for Easypaisa API (for Index.jsf)
         $post_data = array(
             "storeId" => $this->storeId,
             "amount" => $amount,
@@ -68,7 +70,7 @@ class EasypaisaController extends AppBaseController{
             // Initialize Guzzle HTTP Client
             $client = new \GuzzleHttp\Client();
     
-            // Send POST request to Easypaisa
+            // Send POST request to Easypaisa (Index.jsf)
             $response = $client->post('https://easypay.easypaisa.com.pk/easypay/Index.jsf', [
                 'form_params' => $post_data
             ]);
@@ -76,12 +78,36 @@ class EasypaisaController extends AppBaseController{
             // Get the response body
             $responseBody = $response->getBody()->getContents();
     
-            // Handle the response, typically redirect the user to the payment page or display the QR code
-            // Assuming the response contains something to show to the user, you can process that
+            // Assuming you need to extract some data (e.g., auth token) from the first response
+            $responseData = json_decode($responseBody, true);
+            if (isset($responseData['auth_token'])) {
+                $authToken = $responseData['auth_token'];
+            } else {
+                throw new \Exception("Failed to retrieve auth_token.");
+            }
+    
+            // Now make a second request to Confirm.jsf with the auth_token
+            $confirm_data = [
+                "auth_token" => $authToken,
+                "orderRefNum" => $orderRefNum,
+            ];
+    
+            // Send POST request to Easypaisa (Confirm.jsf)
+            $confirmResponse = $client->post('https://easypay.easypaisa.com.pk/easypay/Confirm.jsf', [
+                'form_params' => $confirm_data
+            ]);
+    
+            // Get the confirm response body
+            $confirmResponseBody = $confirmResponse->getBody()->getContents();
+    
+            // Return the result of both responses (success)
             return response()->json([
                 'status' => 'success',
                 'message' => 'Checkout initiated',
-                'data' => $responseBody,
+                'data' => [
+                    'index_response' => $responseBody,
+                    'confirm_response' => $confirmResponseBody
+                ],
             ]);
     
         } catch (\Exception $e) {
@@ -93,6 +119,7 @@ class EasypaisaController extends AppBaseController{
             ]);
         }
     }
+    
     
 
     public function checkoutConfirm(Request $request) { 
