@@ -50,7 +50,7 @@ class ContestController extends Controller
 
         $contest = Contest::create($request->only('winner_prize', 'runner_up_prize'));
 
-        $contest->contestDetails()->create($request->only('total_winners', 'total_runner_ups', 'participants_limit', 'start_date', 'end_date', 'entry_fee'));
+        $contest->contestDetails()->create($request->only('total_winners', 'total_runner_ups', 'start_date', 'end_date', 'entry_fee'));
 
         return redirect()->route('listContests')->with('success', 'Contest created successfully!');
     }
@@ -71,7 +71,7 @@ class ContestController extends Controller
         $contest->update($request->only('winner_prize', 'runner_up_prize'));
         
         $contestDetails = $contest->contestDetails;
-        $contestDetails->update($request->only('total_winners', 'total_runner_ups', 'participants_limit', 'start_date', 'end_date', 'entry_fee'));
+        $contestDetails->update($request->only('total_winners', 'total_runner_ups', 'start_date', 'end_date', 'entry_fee'));
 
         return redirect()->route('listContests')->with('success', 'Contest updated successfully!');
     }

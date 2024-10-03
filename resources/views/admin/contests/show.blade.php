@@ -31,10 +31,6 @@
                         <td>{{ $contest->contestDetails?$contest->contestDetails->total_runner_ups:'-' }}</td>
                     </tr>
                     <tr>
-                        <th>Participants Limit:</th>
-                        <td>{{ $contest->contestDetails?$contest->contestDetails->participants_limit:'-' }}</td>
-                    </tr>
-                    <tr>
                         <th>Start Date:</th>
                         <td>{{ $contest->contestDetails?$contest->contestDetails->start_date:'-' }}</td>
                     </tr>

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\EasypaisaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ParticipantController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +21,20 @@ use Illuminate\Support\Facades\Route;
 
 // Example Routes
 Route::middleware('guest')->group(function () {
-    Route::get('/', [LoginController::class,'showAdminLogin'])->name('login');
+    
+    Route::get('/', [LoginController::class,'showAdminLogin'])->name('showAdminLogin');
     Route::get('login', [LoginController::class,'showAdminLogin'])->name('showAdminLogin');
     Route::post('login-post', [LoginController::class,'login'])->name('loginPost');
+});
+
+Route::get('pay', [EasypaisaController::class, 'doCheckout']);
+
+Route::post('checkout-confirm', function(Request $request){
+    return $request->all();
+});
+
+Route::post('paymentStatus', function(Request $request){
+    return $request->all();
 });
 
 Route::middleware('auth')->group(function () {

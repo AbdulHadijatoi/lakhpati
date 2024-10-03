@@ -12,7 +12,6 @@
             <p><strong>Runner-up Prize:</strong> {{ $contest->runner_up_prize }}</p>
             <p><strong>Total Winners:</strong> {{ $contest->contestDetails->total_winners }}</p>
             <p><strong>Total Runner-ups:</strong> {{ $contest->contestDetails->total_runner_ups }}</p>
-            <p><strong>Participants Limit:</strong> {{ $contest->contestDetails->participants_limit }}</p>
             <p><strong>Start Date:</strong> {{ $contest->contestDetails->start_date }}</p>
             <p><strong>End Date:</strong> {{ $contest->contestDetails->end_date }}</p>
             <p><strong>Entry Fee:</strong> {{ $contest->contestDetails->entry_fee }}</p>

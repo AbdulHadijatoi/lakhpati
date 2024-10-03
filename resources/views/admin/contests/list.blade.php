@@ -46,7 +46,6 @@
                             <th>Runner-up Prize</th>
                             <th>Total Winners</th>
                             <th>Total Runner-ups</th>
-                            <th>Participants Limit</th>
                             <th>Entry Fee</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -63,7 +62,6 @@
                             <td>{{ $contest->runner_up_prize }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->total_winners:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->total_runner_ups:'-' }}</td>
-                            <td>{{ $contest->contestDetails?$contest->contestDetails->participants_limit:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->entry_fee:'-' }}</td>
                             <td>
                                 @if($contest->status)

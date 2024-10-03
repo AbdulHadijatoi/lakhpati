@@ -55,11 +55,6 @@
                   <input type="number" class="form-control" id="total_runner_ups" name="total_runner_ups" required>
               </div>
 
-              <div class="form-group col-md-2 mb-4">
-                  <label class="form-label" for="participants_limit">Participants Limit <span class="text-danger">*</span></label>
-                  <input type="number" class="form-control" id="participants_limit" name="participants_limit" required>
-              </div>
-
               
             <div class="form-group col-md-2 mb-4">
                 <label class="form-label" for="entry_fee">Entry Fee <span class="text-danger">*</span></label>

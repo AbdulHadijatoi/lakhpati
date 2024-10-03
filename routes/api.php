@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\ContestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,16 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix'=>'v1'],function(){
-    Route::post('login', [AuthController::class,'login']);
-    Route::post('register', [AuthController::class,'register']);
-});
+Route::group(['prefix' => 'v1'], function() {
+    // Authentication routes
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
 
+    // Authenticated user routes
+    Route::group(['prefix' => 'user', 'middleware'=> 'auth:api'], function () {
+        Route::get('/details', function (Request $request) {
+            return $request->user();
+        });
 
-Route::middleware('auth:api')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
+        Route::get('/contests', [ContestController::class, 'userContests']);
     });
 
-    // Add more protected routes here...
+    // Contest-related routes
+    Route::group(['prefix' => 'contests'], function() {
+        Route::get('/', [ContestController::class, 'getAllContests']);
+    });
 });
+
