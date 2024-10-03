@@ -29,11 +29,16 @@ Route::middleware('guest')->group(function () {
 
 Route::get('pay', [EasypaisaController::class, 'doCheckout']);
 
-Route::post('checkout-confirm', function(Request $request){
-    return $request->all();
+Route::any('checkout-confirm', function(Request $request){
+    $post_data = [
+        'postBackURL' => $request->postBackURL,
+        'auth_token' => $request->auth_token
+    ];
+    return $post_data;
+    return view('checkout_confirm_v',compact('post_data'));
 });
 
-Route::post('paymentStatus', function(Request $request){
+Route::any('paymentStatus', function(Request $request){
     return $request->all();
 });
 

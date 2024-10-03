@@ -45,7 +45,7 @@ class EasypaisaController extends AppBaseController{
             "postBackURL" => Config::get ('constants.easypay.POST_BACK_URL1'),
             "orderRefNum" => $orderRefNum,
             "expiryDate" => $expiryDate, //Optional
-            "merchantHashedReg" => "", //Optional
+            "merchantHashedReq" => "", //Optional
             "autoRedirect" => "1", //Optional
             "paymentMethod" => "QR_PAYMENT_METHOD", //Optional
             // OTC_PAYMENT_METHOD
@@ -54,7 +54,7 @@ class EasypaisaController extends AppBaseController{
             // QR_PAYMENT_METHOD
         );
 
-        $post_data['merchantHashedReg'] = $this->getSecureHash($post_data);
+        $post_data['merchantHashedReq'] = $this->getSecureHash($post_data);
 
         $values = array(
             'TxnRefNo' => $orderRefNum,
@@ -71,11 +71,10 @@ class EasypaisaController extends AppBaseController{
     }
 
     public function checkoutConfirm(Request $request) { 
-        $response = $request->input(); 
+        $response = $request->input();
         $post_data = array(); 
         $post_data['auth_token'] = $response['auth_token'];
         $post_data['postBackUrl'] = Config::get('constants.easypay.POST_BACK_URL2');
-
         echo '<pre>';
         print_r($post_data);
         echo '</pre>';
@@ -84,6 +83,7 @@ class EasypaisaController extends AppBaseController{
     }
 
     public function paymentStatus(Request $request) { 
+
         $response = $request->input(); 
         echo '<pre>'; 
         print_r($response); 

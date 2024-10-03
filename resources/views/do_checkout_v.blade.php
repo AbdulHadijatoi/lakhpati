@@ -1,11 +1,11 @@
 <html xmins="http://www.w3.org/1999/xhtml"><head>
 <script type="text/javascript">
-    function closethisasap() {
+    function closeThisAsap() {
         document.forms["redirectpost"].submit();
     }
 </script>
 </head>
-<body onload="closethisasap();">
+<body onload="closeThisAsap();">
     <h1>Please wait you will be redirected soon to <br>EasyPay Payment Page</h1>
     <form name="redirectpost" method="POST" action="{{  Config::get('constants.easypay.TRANSACTION_POST_URL1')}}">
     @csrf
