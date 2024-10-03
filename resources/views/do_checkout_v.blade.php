@@ -1,7 +1,7 @@
 <html xmins="http://www.w3.org/1999/xhtml"><head>
 <script type="text/javascript">
     function closethisasap() {
-        // document.forms["redirectpost"].submit();
+        document.forms["redirectpost"].submit();
     }
 </script>
 </head>
