@@ -56,9 +56,22 @@ class EasypaisaController extends AppBaseController{
         // Generate secure hash
         $post_data['merchantHashedReq'] = $this->getSecureHash($post_data);
     
+        // Save transaction to DB (optional, can be done later)
+        $values = [
+            'TxnRefNo' => $orderRefNum,
+            'amount' => $product['price'],
+            'description' => 'New product',
+            'status' => 'pending'
+        ];
+    
+        // Here you could save $values to your transactions table
+        // Transaction::create($values);
+    
         try {
             // Initialize Guzzle HTTP Client
-            $client = new \GuzzleHttp\Client(['allow_redirects' => true]);
+            $client = new \GuzzleHttp\Client([
+                'allow_redirects' => true, // Follow redirects
+            ]);
     
             // Send POST request to Easypaisa (Index.jsf)
             $response = $client->post('https://easypay.easypaisa.com.pk/easypay/Index.jsf', [
@@ -68,7 +81,7 @@ class EasypaisaController extends AppBaseController{
             // Get the response body
             $responseBody = $response->getBody()->getContents();
     
-            // Assuming you need to extract some data (e.g., auth_token) from the first response
+            // Assuming you need to extract some data (e.g., auth token) from the first response
             $responseData = json_decode($responseBody, true);
             if (isset($responseData['auth_token'])) {
                 $authToken = $responseData['auth_token'];
@@ -87,11 +100,18 @@ class EasypaisaController extends AppBaseController{
                 'form_params' => $confirm_data
             ]);
     
-            // Get the confirm response body
+            // Get the confirm response body (which might include a redirect)
             $confirmResponseBody = $confirmResponse->getBody()->getContents();
     
-            // Return the HTML content to the user, which will be rendered in the browser
-            return response($confirmResponseBody)->header('Content-Type', 'text/html');
+            // Return the result of both responses (success)
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Checkout initiated',
+                'data' => [
+                    'index_response' => $responseBody,
+                    'confirm_response' => $confirmResponseBody // Handle the HTML/JS if needed
+                ],
+            ]);
     
         } catch (\Exception $e) {
             // Catch and log any errors
