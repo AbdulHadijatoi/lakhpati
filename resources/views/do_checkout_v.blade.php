@@ -1,13 +1,14 @@
 <html xmins="http://www.w3.org/1999/xhtml"><head>
 <script type="text/javascript">
     function closethisasap() {
-        //document.forms["redirectpost"].submit();
+        // document.forms["redirectpost"].submit();
     }
 </script>
 </head>
 <body onload="closethisasap();">
     <h1>Please wait you will be redirected soon to <br>EasyPay Payment Page</h1>
     <form name="redirectpost" method="POST" action="{{  Config::get('constants.easypay.TRANSACTION_POST_URL1')}}">
+    @csrf
         <?php
             $post_data = Session::get('post_data');
             echo '<pre>';

@@ -2,7 +2,7 @@
     <head>
         <script type = "text/javascript"> 
             function closeTthisAasap(){
-                //document.forms["redirectpost"].submit();
+                // document.forms["redirectpost"].submit();
             }
         </script>
     </head> 
