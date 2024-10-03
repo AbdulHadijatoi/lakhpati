@@ -19,56 +19,81 @@ class EasypaisaController extends AppBaseController{
     protected $transaction_url_2 = 'https://easypaystg.easypaisa.com.pk/easypay/Confirm.jsf';
     
     protected $storeId = '578817';
-    protected $hashKey = 'EVB39B3S9LGTDEK5'; 
-    
+    protected $hashKey = 'EVB39B3S9LGTDEK5';
+
     public function doCheckout(Request $request) {
-        // $data = $request->input();
+        $checkoutConfirm = url('checkout-confirm');
+        $paymentStatus = url('payment-status');
 
-        // $product_id = $data['product_id'];
+        // Example product data (this would typically come from the request or database)
         $product = ['name' => 'New product', 'price' => '20.0'];
-
+    
+        // Format amount
         $amount = $product['price'];
         $amount = number_format($amount, 1);
-
-
+    
+        // Generate order reference number and expiry date
         $dateTime = new DateTime();
-
         $orderRefNum = $dateTime->format('YmdHis');
-
-        $expiryDateTime = $dateTime;
-        $expiryDateTime->modify('+' . 1 . ' hours');
+    
+        $expiryDateTime = (clone $dateTime)->modify('+1 hours');
         $expiryDate = $expiryDateTime->format('Ymd His');
-
+    
+        // Prepare the post data for Easypaisa API
         $post_data = array(
-            "storeId" => Config::get('constants.easypay.STORE_ID'),
+            "storeId" => $this->storeId,
             "amount" => $amount,
-            "postBackURL" => Config::get ('constants.easypay.POST_BACK_URL1'),
+            "postBackURL" => $checkoutConfirm,
             "orderRefNum" => $orderRefNum,
-            "expiryDate" => $expiryDate, //Optional
-            "merchantHashedReq" => "", //Optional
-            "autoRedirect" => "1", //Optional
-            "paymentMethod" => "QR_PAYMENT_METHOD", //Optional
-            // OTC_PAYMENT_METHOD
-            // MA_PAYMENT_METHOD
-            // CC_PAYMENT_METHOD
-            // QR_PAYMENT_METHOD
+            "expiryDate" => $expiryDate, // Optional
+            "merchantHashedReq" => "", // To be generated
+            "autoRedirect" => "1", // Optional
+            "paymentMethod" => "QR_PAYMENT_METHOD", // Payment Method
         );
-
+    
+        // Generate secure hash
         $post_data['merchantHashedReq'] = $this->getSecureHash($post_data);
-
-        $values = array(
+    
+        // Save transaction to DB (optional, can be done later)
+        $values = [
             'TxnRefNo' => $orderRefNum,
             'amount' => $product['price'],
             'description' => 'New product',
             'status' => 'pending'
-        );
-
-        // SAVE $VALUES TO DB
-
-        Session::put('post_data', $post_data);
-
-        return view('do_checkout_v');
+        ];
+        // Here you could save $values to your transactions table
+        // Transaction::create($values);
+    
+        try {
+            // Initialize Guzzle HTTP Client
+            $client = new \GuzzleHttp\Client();
+    
+            // Send POST request to Easypaisa
+            $response = $client->post('https://easypay.easypaisa.com.pk/easypay/Index.jsf', [
+                'form_params' => $post_data
+            ]);
+    
+            // Get the response body
+            $responseBody = $response->getBody()->getContents();
+    
+            // Handle the response, typically redirect the user to the payment page or display the QR code
+            // Assuming the response contains something to show to the user, you can process that
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Checkout initiated',
+                'data' => $responseBody,
+            ]);
+    
+        } catch (\Exception $e) {
+            // Catch and log any errors
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Checkout failed',
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
+    
 
     public function checkoutConfirm(Request $request) { 
         $response = $request->input();
