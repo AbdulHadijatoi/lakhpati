@@ -28,6 +28,7 @@ Route::group(['prefix' => 'v1'], function() {
         });
 
         Route::get('/contests', [ContestController::class, 'userContests']);
+        Route::post('/participate', [ContestController::class, 'participate']);
     });
 
     // Contest-related routes
