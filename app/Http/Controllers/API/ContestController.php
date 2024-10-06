@@ -29,6 +29,12 @@ class ContestController extends AppBaseController {
         return $this->sendDataResponse($data);
     }
     
+    public function contestDetail($contest_id) {
+        $data = Contest::find($contest_id);
+
+        return $this->sendDataResponse($data);
+    }
+    
     public function participate(Request $request) {
         $request->validate([
             'contest_id' => 'required|exists:contests,id'
@@ -53,7 +59,7 @@ class ContestController extends AppBaseController {
         $data = [
             'ticket_number' => $participation->id,
         ];
-        
+
         return $this->sendDataResponse($data);
     }
     
