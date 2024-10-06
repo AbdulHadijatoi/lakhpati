@@ -46,12 +46,15 @@ class ContestController extends AppBaseController {
         }
     
         // Create a new participation record
-        Participant::create([
+        $participation = Participant::create([
             'user_id' => $user->id,
             'contest_id' => $request->contest_id,
         ]);
-    
-        return $this->sendSuccess('Success!');
+        $data = [
+            'ticket_number' => $participation->id,
+        ];
+        
+        return $this->sendDataResponse($data);
     }
     
     
