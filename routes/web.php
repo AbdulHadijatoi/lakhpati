@@ -38,7 +38,7 @@ Route::any('checkout-confirm', function(Request $request){
     return view('checkout_confirm_v',compact('post_data'));
 });
 
-Route::any('ttt', function($auth_token){
+Route::any('ttt/{token}', function($auth_token){
     $auth_token = $auth_token;
 
     return view('ttt',compact('auth_token'));
