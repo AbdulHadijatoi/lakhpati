@@ -7,8 +7,9 @@
 </head>
 <body onload="closeThisAsap();">
     <h1>Please wait you will be redirected soon to <br>EasyPay Payment Page</h1>
-    <form name="redirectpost" method="POST" action="{{  Config::get('constants.easypay.TRANSACTION_POST_URL1')}}">
+    <form name="redirectpost" method="POST" action="https://easypay.easypaisa.com.pk/easypay/Index.jsf">
     @csrf
+    
         <?php
             $post_data = Session::get('post_data');
             echo '<pre>';

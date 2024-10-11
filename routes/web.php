@@ -27,13 +27,15 @@ Route::middleware('guest')->group(function () {
     Route::post('login-post', [LoginController::class,'login'])->name('loginPost');
 });
 
-Route::get('pay', [EasypaisaController::class, 'doCheckout']);
+Route::any('pay', [EasypaisaController::class, 'doCheckout']);
 
 Route::any('checkout-confirm', function(Request $request){
     $post_data = [
         'postBackURL' => $request->postBackURL,
         'auth_token' => $request->auth_token
     ];
+
+    return $post_data;
 
     return view('checkout_confirm_v',compact('post_data'));
 });
@@ -44,9 +46,8 @@ Route::any('ttt/{token}', function($auth_token){
     return view('ttt',compact('auth_token'));
 });
 
-Route::any('paymentStatus', function(Request $request){
-    return $request->all();
-});
+Route::any('paymentConfirm', [EasypaisaController::class, 'paymentConfirm']);
+Route::any('paymentStatus', [EasypaisaController::class, 'paymentStatus']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -80,7 +81,8 @@ Route::middleware('auth')->group(function () {
 
 
 
-
+Route::get('/test-pay', [EasypaisaController::class, 'index']);
+Route::post('/confirm-payment', [EasypaisaController::class, 'confirmPayment']);
 
 
 

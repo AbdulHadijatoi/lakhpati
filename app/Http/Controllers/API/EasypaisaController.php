@@ -15,134 +15,72 @@ use Illuminate\Support\Facades\Session;
 class EasypaisaController extends AppBaseController{
     
     // Sandbox Url's
-    protected $transaction_url_1 = 'https://easypaystg.easypaisa.com.pk/easypay/Index.jsf';
-    protected $transaction_url_2 = 'https://easypaystg.easypaisa.com.pk/easypay/Confirm.jsf';
+    protected $transaction_url_1 = 'https://easypay.easypaisa.com.pk/easypay/Index.jsf';
+    protected $transaction_url_2 = 'https://easypay.easypaisa.com.pk/easypay/Confirm.jsf';
     
     protected $storeId = '578817';
-    protected $hashKey = 'EVB39B3S9LGTDEK5';
-
+    protected $hashKey = 'EVB39B3S9LGTDEK5'; 
+    
     public function doCheckout(Request $request) {
-        // Define the URLs for confirmation and status check
-        $checkoutConfirm = url('checkout-confirm');
-        $paymentStatus = url('payment-status');
-    
-        // Example product data (this would typically come from the request or database)
+        // $data = $request->input();
+
+        // $product_id = $data['product_id'];
         $product = ['name' => 'New product', 'price' => '20.0'];
-    
-        // Format amount
+
         $amount = $product['price'];
         $amount = number_format($amount, 1);
-    
-        // Generate order reference number and expiry date
+
+
         $dateTime = new DateTime();
+
         $orderRefNum = $dateTime->format('YmdHis');
-    
-        // Set expiry date (1 hour from current time)
-        $expiryDateTime = (clone $dateTime)->modify('+1 hours');
+
+        $expiryDateTime = $dateTime;
+        $expiryDateTime->modify('+' . 1 . ' hours');
         $expiryDate = $expiryDateTime->format('Ymd His');
-    
-        // Prepare the post data for Easypaisa API (for Index.jsf)
+
         $post_data = array(
-            "storeId" => $this->storeId,
+            "storeId" => '578817',
             "amount" => $amount,
-            "postBackURL" => $checkoutConfirm,
+            "postBackURL" => url('paymentConfirm'),
             "orderRefNum" => $orderRefNum,
-            "expiryDate" => $expiryDate, // Optional
-            "merchantHashedReq" => "", // To be generated
-            "autoRedirect" => "1", // Optional
-            "paymentMethod" => "QR_PAYMENT_METHOD", // Payment Method
+            "expiryDate" => $expiryDate, //Optional
+            "merchantHashedReq" => "", //Optional
+            "autoRedirect" => "1", //Optional
+            "paymentMethod" => "QR_PAYMENT_METHOD", //Optional
+            // OTC_PAYMENT_METHOD
+            // MA_PAYMENT_METHOD
+            // CC_PAYMENT_METHOD
+            // QR_PAYMENT_METHOD
         );
-    
-        // Generate secure hash
+
         $post_data['merchantHashedReq'] = $this->getSecureHash($post_data);
-    
-        // Save transaction to DB (optional, can be done later)
-        $values = [
+
+        $values = array(
             'TxnRefNo' => $orderRefNum,
             'amount' => $product['price'],
             'description' => 'New product',
             'status' => 'pending'
-        ];
-    
-        // Here you could save $values to your transactions table
-        // Transaction::create($values);
-    
-        try {
-            // Initialize Guzzle HTTP Client
-            $client = new \GuzzleHttp\Client([
-                'allow_redirects' => true, // Follow redirects
-            ]);
-    
-            // Send POST request to Easypaisa (Index.jsf)
-            $response = $client->post('https://easypay.easypaisa.com.pk/easypay/Index.jsf', [
-                'form_params' => $post_data
-            ]);
-    
-            // Get the response body
-            $responseBody = $response->getBody()->getContents();
-    
-            // Assuming you need to extract some data (e.g., auth token) from the first response
-            $responseData = json_decode($responseBody, true);
-            if (isset($responseData['auth_token'])) {
-                $authToken = $responseData['auth_token'];
-            } else {
-                throw new \Exception("Failed to retrieve auth_token.");
-            }
-    
-            // Now make a second request to Confirm.jsf with the auth_token
-            $confirm_data = [
-                "auth_token" => $authToken,
-                "orderRefNum" => $orderRefNum,
-            ];
-    
-            // Send POST request to Easypaisa (Confirm.jsf)
-            $confirmResponse = $client->post('https://easypay.easypaisa.com.pk/easypay/Confirm.jsf', [
-                'form_params' => $confirm_data
-            ]);
-    
-            // Get the confirm response body (which might include a redirect)
-            $confirmResponseBody = $confirmResponse->getBody()->getContents();
-    
-            // Return the result of both responses (success)
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Checkout initiated',
-                'data' => [
-                    'index_response' => $responseBody,
-                    'confirm_response' => $confirmResponseBody // Handle the HTML/JS if needed
-                ],
-            ]);
-    
-        } catch (\Exception $e) {
-            // Catch and log any errors
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Checkout failed',
-                'error' => $e->getMessage(),
-            ]);
-        }
+        );
+
+        // SAVE $VALUES TO DB
+
+        Session::put('post_data', $post_data);
+
+        return view('do_checkout_v');
     }
-    
-    
 
-    public function checkoutConfirm(Request $request) { 
-        $response = $request->input();
-        $post_data = array(); 
-        $post_data['auth_token'] = $response['auth_token'];
-        $post_data['postBackUrl'] = Config::get('constants.easypay.POST_BACK_URL2');
-        echo '<pre>';
-        print_r($post_data);
-        echo '</pre>';
+    public function paymentConfirm(Request $request) { 
+        
+        $data = array(); 
+        $data['auth_token'] = $request->auth_token;
+        $data['postBackUrl'] = url('paymentStatus');
 
-        return view('checkout_confirm_v',['post_data' => $post_data]);
+        return view('checkout_confirm_v',compact('data'));
     }
 
     public function paymentStatus(Request $request) { 
-
-        $response = $request->input(); 
-        echo '<pre>'; 
-        print_r($response); 
-        echo '</pre>';
+        return $request->input();
     }
 
     private function getSecureHash($data_array){
@@ -167,10 +105,66 @@ class EasypaisaController extends AppBaseController{
         }	
         
         $cipher = "aes-128-ecb";
-        $crypttext = openssl_encrypt($sorted_string, $cipher, Config::get('constants.easypay.HASHKEY'), OPENSSL_RAW_DATA);
+        $crypttext = openssl_encrypt($sorted_string, $cipher, 'EVB39B3S9LGTDEK5', OPENSSL_RAW_DATA);
         $HashedRequest = Base64_encode($crypttext);
 
         return $HashedRequest;
+    }
+
+
+    public function index()
+    {
+        $hashKey = $this->hashKey; // generated from easypay account
+        $storeId = $this->storeId;
+        $amount = "30.0";
+        $postBackURL = "https://www.test.com/confirm-payment";
+        $orderRefNum = "1008";
+        $expiryDate = "20190721 112300";
+        $autoRedirect = 0;
+        $paymentMethod = 'CC_PAYMENT_METHOD';
+        $emailAddr = 'abdulhadijatoi@gmail.com';
+        $mobileNum = "03362735187";
+
+        // Starting encryption
+        $paramMap = [
+            'amount' => $amount,
+            'autoRedirect' => $autoRedirect,
+            'emailAddr' => $emailAddr,
+            'expiryDate' => $expiryDate,
+            'mobileNum' => $mobileNum,
+            'orderRefNum' => $orderRefNum,
+            'paymentMethod' => $paymentMethod,
+            'postBackURL' => $postBackURL,
+            'storeId' => $storeId,
+        ];
+
+        // Creating the string to be encoded
+        $mapString = '';
+        foreach ($paramMap as $key => $val) {
+            $mapString .= $key . '=' . $val . '&';
+        }
+        $mapString = substr($mapString, 0, -1);
+
+        // Encrypting the string
+        $mapString = $this->pkcs5Pad($mapString, 16);
+        $crypttext = openssl_encrypt($mapString, 'AES-128-ECB', $hashKey, OPENSSL_RAW_DATA);
+        $hashRequest = base64_encode($crypttext);
+
+        // Returning the view with the encrypted data
+        return view('payment.index', compact('storeId', 'amount', 'postBackURL', 'orderRefNum', 'expiryDate', 'autoRedirect', 'paymentMethod', 'emailAddr', 'mobileNum', 'hashRequest'));
+    }
+
+    // Function for padding the string
+    private function pkcs5Pad($text, $blocksize)
+    {
+        $pad = $blocksize - (strlen($text) % $blocksize);
+        return $text . str_repeat(chr($pad), $pad);
+    }
+
+    public function confirmPayment(Request $request)
+    {
+        // Handle the confirmation process here
+        return view('payment.confirm', ['auth_token' => $request->input('auth_token')]);
     }
     
 }
