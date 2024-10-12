@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'easypaisa/*',  // This will exclude all routes under 'easypaisa'
+        'easypaisa',    // Optionally, you can also exclude the base 'easypaisa' route
     ];
 }

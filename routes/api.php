@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\ContestController;
+use App\Http\Controllers\API\EasypaisaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,15 @@ Route::group(['prefix' => 'v1'], function() {
     // Authentication routes
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
-
+    // api/v1/easypaisa/checkout?contest_id=53
     // Authenticated user routes
+    Route::group(['prefix' => 'easypaisa', 'middleware'=> 'auth:api'], function () {
+    // Route::group(['prefix' => 'easypaisa'], function () {
+        Route::post('checkout', [EasypaisaController::class, 'checkout']);
+        Route::any('checkout/confirm', [EasypaisaController::class, 'checkoutConfirm']);
+        Route::any('payment-status', [EasypaisaController::class, 'paymentStatus']);
+    });
+
     Route::group(['prefix' => 'user', 'middleware'=> 'auth:api'], function () {
         Route::get('/details', function (Request $request) {
             return $request->user();

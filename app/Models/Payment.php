@@ -11,8 +11,7 @@ class Payment extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['user_id', 'contest_id', 'amount', 'payment_type', 'payment_status', 'description'];
-    protected $dates = ['deleted_at'];
+    protected $fillable = ['user_id', 'contest_id', 'amount', 'payment_type', 'payment_status', 'description', 'order_reference', 'response_data'];
 
     public function user(): BelongsTo
     {
