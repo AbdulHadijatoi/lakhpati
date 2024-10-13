@@ -49,17 +49,17 @@
                 
                 <li class="nav-main-heading">Payments</li>
                 <li class="nav-main-item" disabled>
-                    <a class="nav-main-link" href="#">
-                        <i class="nav-main-link-icon fa fa-dollar-sign"></i>
+                    <a class="nav-main-link" href="{{ route('payments.index') }}">
+                        <i class="nav-main-link-icon fa fa-money-check-alt"></i>
                         <span class="nav-main-link-name">Easypaisa Payments</span>
                     </a>
                 </li>
-                <li class="nav-main-item" disabled>
+                {{-- <li class="nav-main-item" disabled>
                     <a class="nav-main-link" href="#">
                         <i class="nav-main-link-icon fa fa-money-check-alt"></i>
                         <span class="nav-main-link-name">Jazzcash Payments</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

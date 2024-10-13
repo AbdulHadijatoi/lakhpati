@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\PaymentController;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +50,9 @@ Route::middleware('auth')->group(function () {
         Route::get('show/{id}', [ParticipantController::class,'show'])->name('showParticipant');
         Route::get('list-contest-participants/{id}', [ParticipantController::class,'contestParticipants'])->name('listContestParticipants');
         Route::delete('delete/{id}', [ParticipantController::class, 'destroy'])->name('deleteParticipant');
+    });
+    Route::group(['prefix'=>'payments'], function () {
+        Route::get('/', [PaymentController::class,'index'])->name('payments.index');
     });
 
     Route::post('logout', [LoginController::class,'logout'])->name('logout');
