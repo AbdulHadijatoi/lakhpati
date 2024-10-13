@@ -25,7 +25,7 @@ Route::group(['prefix' => 'v1'], function() {
     // Authenticated user routes
     Route::group(['prefix' => 'easypaisa', 'middleware'=> 'auth:api'], function () {
     // Route::group(['prefix' => 'easypaisa'], function () {
-        Route::post('checkout', [EasypaisaController::class, 'checkout']);
+        Route::get('checkout', [EasypaisaController::class, 'checkout']);
         Route::any('checkout/confirm', [EasypaisaController::class, 'checkoutConfirm']);
         Route::any('payment-status', [EasypaisaController::class, 'paymentStatus']);
     });
