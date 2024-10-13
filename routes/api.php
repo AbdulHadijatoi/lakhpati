@@ -23,9 +23,9 @@ Route::group(['prefix' => 'v1'], function() {
     Route::post('register', [AuthController::class, 'register']);
     // api/v1/easypaisa/checkout?contest_id=53
     // Authenticated user routes
-    Route::group(['prefix' => 'easypaisa', 'middleware'=> 'auth:api'], function () {
+    Route::group(['prefix' => 'easypaisa'], function () {
     // Route::group(['prefix' => 'easypaisa'], function () {
-        Route::get('checkout', [EasypaisaController::class, 'checkout']);
+        Route::get('checkout', [EasypaisaController::class, 'checkout'])->middleware('auth:api');
         Route::any('checkout/confirm', [EasypaisaController::class, 'checkoutConfirm']);
         Route::any('payment-status', [EasypaisaController::class, 'paymentStatus']);
     });
