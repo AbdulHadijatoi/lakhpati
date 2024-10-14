@@ -12,6 +12,10 @@ class Contest extends Model
     use HasFactory;
     protected $fillable = ['title', 'description', 'winner_prize', 'runner_up_prize','status'];
 
+    protected $with = ['contestDetails'];
+
+    protected $appends = ['total_participants'];
+
     public function contestDetails(): HasOne
     {
         return $this->hasOne(ContestDetails::class,'contest_id');
@@ -25,5 +29,11 @@ class Contest extends Model
     public function participants()
     {
         return $this->hasMany(Participant::class,'contest_id');
+    }
+
+    // Accessor for total number of participants
+    public function getTotalParticipantsAttribute(): int
+    {
+        return $this->participants()->count();
     }
 }
