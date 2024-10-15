@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
 class Contest extends Model
 {
@@ -14,7 +15,7 @@ class Contest extends Model
 
     protected $with = ['contestDetails'];
 
-    protected $appends = ['total_participants'];
+    protected $appends = ['total_participants', 'has_active_participation'];
 
     public function contestDetails(): HasOne
     {
@@ -35,5 +36,21 @@ class Contest extends Model
     public function getTotalParticipantsAttribute(): int
     {
         return $this->participants()->count();
+    }
+
+    // Accessor to check if the authenticated user has active participation in the contest
+    public function getHasActiveParticipationAttribute(): bool
+    {
+        if (!Auth::check()) {
+            // If the user is not authenticated, return false
+            return false;
+        }
+
+        $userId = Auth::id(); // Get the authenticated user's ID
+
+        return $this->participants()
+            ->where('user_id', $userId)
+            ->where('status', 1) // Assuming 'status' defines if participation is active
+            ->exists();
     }
 }
