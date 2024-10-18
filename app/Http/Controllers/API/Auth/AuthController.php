@@ -73,4 +73,44 @@ class AuthController extends AppBaseController
         
         return $this->sendDataResponse($data);
     }
+
+    public function updateProfile(Request $request)
+    {
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Validate input data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|unique:users,phone,' . $user->id,
+            'password' => 'nullable|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
+        // Update the user details
+        $user->name = $request->name;
+        if ($request->email) {
+            $user->email = $request->email;
+        }
+        if ($request->phone) {
+            $user->phone = $request->phone;
+        }
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        // Save the updated user
+        $user->save();
+
+        // Return success response with updated user details
+        $data = [
+            'user' => $user
+        ];
+
+        return $this->sendDataResponse($data, 'Profile updated successfully.');
+    }
 }
