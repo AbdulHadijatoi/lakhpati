@@ -38,7 +38,7 @@ Route::group(['prefix' => 'v1'], function() {
         Route::get('/contests', [ContestController::class, 'userContests']);
         Route::post('/participate', [ContestController::class, 'participate']);
         Route::put('/update-profile', [AuthController::class, 'updateProfile']);
-        Route::put('/details', [AuthController::class, 'userDetails']);
+        Route::get('/details', [AuthController::class, 'userDetails']);
     });
 
     // Contest-related routes
