@@ -113,4 +113,11 @@ class AuthController extends AppBaseController
 
         return $this->sendDataResponse($data, 'Profile updated successfully.');
     }
+    
+    public function userDetails()
+    {
+        // Get the currently authenticated user
+        $user = Auth::user();
+        return $this->sendDataResponse($user, 'Profile updated successfully.');
+    }
 }
