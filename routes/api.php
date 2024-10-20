@@ -35,11 +35,11 @@ Route::group(['prefix' => 'v1'], function() {
             return $request->user();
         });
 
-        Route::get('/contests', [ContestController::class, 'userContests']);
-        Route::post('/participate', [ContestController::class, 'participate']);
-        Route::put('/update-profile', [AuthController::class, 'updateProfile']);
-        Route::get('/details', [AuthController::class, 'userDetails']);
-    })->middleware('auth:api');
+        Route::get('/contests', [ContestController::class, 'userContests'])->middleware('auth:api');
+        Route::post('/participate', [ContestController::class, 'participate'])->middleware('auth:api');
+        Route::put('/update-profile', [AuthController::class, 'updateProfile'])->middleware('auth:api');
+        Route::get('/details', [AuthController::class, 'userDetails'])->middleware('auth:api');
+    });
 
     // Contest-related routes
     Route::group(['prefix' => 'contests'], function() {
