@@ -30,7 +30,7 @@ Route::group(['prefix' => 'v1'], function() {
         Route::any('payment-status', [EasypaisaController::class, 'paymentStatus']);
     });
 
-    Route::group(['prefix' => 'user', 'middleware'=> 'auth:api'], function () {
+    Route::group(['prefix' => 'user'], function () {
         Route::get('/details', function (Request $request) {
             return $request->user();
         });
@@ -39,11 +39,11 @@ Route::group(['prefix' => 'v1'], function() {
         Route::post('/participate', [ContestController::class, 'participate']);
         Route::put('/update-profile', [AuthController::class, 'updateProfile']);
         Route::get('/details', [AuthController::class, 'userDetails']);
-    });
+    })->middleware('auth:api');
 
     // Contest-related routes
     Route::group(['prefix' => 'contests'], function() {
-        Route::get('/', [ContestController::class, 'getAllContests'])->middleware('auth:api');
+        Route::get('/', [ContestController::class, 'getAllContests']);
         Route::get('/{contest_id}', [ContestController::class, 'contestDetail']);
     });
 });
