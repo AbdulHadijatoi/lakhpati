@@ -30,7 +30,7 @@ class ContestController extends AppBaseController {
     }
     
     public function contestDetail($contest_id) {
-        $data = Contest::with('participants')->find($contest_id);
+        $data = Contest::with('participants.user')->find($contest_id);
 
         return $this->sendDataResponse($data);
     }
