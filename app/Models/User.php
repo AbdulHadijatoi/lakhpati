@@ -17,7 +17,13 @@ class User extends Authenticatable
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['name', 'email', 'phone', 'password'];
+    
+    protected $hidden = [
+        'password',
+        'remember_token',
+        "last_reset_password_at"
 
+    ];
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
