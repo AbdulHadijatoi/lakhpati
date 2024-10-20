@@ -22,7 +22,7 @@ class ContestController extends AppBaseController {
     
     public function userContests(Request $request) {
         $user = Auth::user();
-        $data = Contest::with('participants')->whereHas('participants', function($query) use($user) {
+        $data = Contest::with('participants.user')->whereHas('participants', function($query) use($user) {
                     $query->where('user_id', $user->id);
                 })->get();
 
