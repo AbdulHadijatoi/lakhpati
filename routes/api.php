@@ -37,6 +37,7 @@ Route::group(['prefix' => 'v1'], function() {
 
         Route::get('/contests', [ContestController::class, 'userContests'])->middleware('auth:api');
         Route::post('/participate', [ContestController::class, 'participate'])->middleware('auth:api');
+        Route::get('/tickets', [ContestController::class, 'getTickets'])->middleware('auth:api');
         Route::put('/update-profile', [AuthController::class, 'updateProfile'])->middleware('auth:api');
         Route::get('/details', [AuthController::class, 'userDetails'])->middleware('auth:api');
     });

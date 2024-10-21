@@ -29,6 +29,15 @@ class ContestController extends AppBaseController {
         return $this->sendDataResponse($data);
     }
     
+    public function getTickets() {
+        $user = Auth::user();
+        $data = Participant::with('user','contest')
+                ->where('user_id', $user->id)
+                ->get();
+
+        return $this->sendDataResponse($data);
+    }
+    
     public function contestDetail($contest_id) {
         $data = Contest::with('participants.user')->find($contest_id);
 
