@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\ContestController;
 use App\Http\Controllers\API\EasypaisaController;
+use App\Http\Controllers\API\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Route::group(['prefix' => 'v1'], function() {
     Route::post('register', [AuthController::class, 'register']);
     // api/v1/easypaisa/checkout?contest_id=53
     // Authenticated user routes
+    
+    Route::get('terms-and-conditions', [HomeController::class, 'getTermsConditions']);
+
     Route::group(['prefix' => 'easypaisa'], function () {
     // Route::group(['prefix' => 'easypaisa'], function () {
         Route::get('checkout', [EasypaisaController::class, 'checkout'])->middleware('auth:api');
@@ -46,6 +50,7 @@ Route::group(['prefix' => 'v1'], function() {
     Route::group(['prefix' => 'contests'], function() {
         Route::get('/', [ContestController::class, 'getAllContests']);
         Route::get('/{contest_id}', [ContestController::class, 'contestDetail']);
+        Route::get('/{contest_id}/tickets', [ContestController::class, 'contestTickets']);
     });
 });
 
