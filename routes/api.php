@@ -51,6 +51,7 @@ Route::group(['prefix' => 'v1'], function() {
         Route::get('/', [ContestController::class, 'getAllContests'])->middleware('auth:api');
         Route::get('/{contest_id}', [ContestController::class, 'contestDetail']);
         Route::get('/{contest_id}/tickets', [ContestController::class, 'contestTickets']);
+        Route::get('/{contest_id}/winners', [ContestController::class, 'contestWinners']);
     });
 });
 

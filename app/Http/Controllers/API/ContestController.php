@@ -57,6 +57,20 @@ class ContestController extends AppBaseController {
         return $this->sendDataResponse($tickets);
     }
     
+    public function contestWinners($contest_id) {
+        $data = Contest::with('winners.participant.user')->where('contest_id',$contest_id)->first();
+
+        $winners = [];
+        $winnersData = $data->winners;
+        
+        foreach ($winnersData as $key => $winner) {
+            $winners[$key]['name'] = $winner->participant && $winner->participant->user ? $winner->participant->user->name : '';
+            $winners[$key]['phone'] = $winner->participant && $winner->participant->user ? $winner->participant->user->phone : '';
+        }
+
+        return $this->sendDataResponse($winners);
+    }
+    
     public function participate(Request $request) {
         $request->validate([
             'contest_id' => 'required|exists:contests,id'
