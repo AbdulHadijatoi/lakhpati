@@ -64,6 +64,8 @@ class ContestController extends AppBaseController {
         $winnersData = $data->winners;
         
         foreach ($winnersData as $key => $winner) {
+            $winners[$key]['is_winner'] = $winner->is_winner;
+            $winners[$key]['is_runner_up'] = $winner->is_runner_up;
             $winners[$key]['name'] = $winner->participant && $winner->participant->user ? $winner->participant->user->name : '';
             $winners[$key]['phone'] = $winner->participant && $winner->participant->user ? $winner->participant->user->phone : '';
         }
