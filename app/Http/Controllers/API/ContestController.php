@@ -58,7 +58,7 @@ class ContestController extends AppBaseController {
     }
     
     public function contestWinners($contest_id) {
-        $data = Contest::with('winners.participant.user')->where('contest_id',$contest_id)->first();
+        $data = Contest::with('winners.participant.user')->where('id',$contest_id)->first();
 
         $winners = [];
         $winnersData = $data->winners;
