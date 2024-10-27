@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [ContestController::class,'store'])->name('contestStore');
         Route::get('edit/{id}', [ContestController::class,'edit'])->name('editContest');
         Route::put('update/{id}', [ContestController::class,'update'])->name('updateContest');
+        Route::post('announce-winners/{id}', [ContestController::class,'announceWinners'])->name('announceWinners');
         Route::delete('delete/{id}', [ContestController::class, 'destroy'])->name('deleteContest');
     });
     // listContestParticipants

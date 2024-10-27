@@ -54,6 +54,14 @@
                         <span class="nav-main-link-name">Easypaisa Payments</span>
                     </a>
                 </li>
+
+                <li class="nav-main-heading">Refund Requests</li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('participants') ? ' active' : '' }}" href="#">
+                        <i class="nav-main-link-icon fa fa-undo"></i>
+                        <span class="nav-main-link-name">Refund Requests List</span>
+                    </a>
+                </li>
                 {{-- <li class="nav-main-item" disabled>
                     <a class="nav-main-link" href="#">
                         <i class="nav-main-link-icon fa fa-money-check-alt"></i>

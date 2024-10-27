@@ -14,16 +14,8 @@
                         <td>{{ $contest->winner_prize }}</td>
                     </tr>
                     <tr>
-                        <th>Runner-up Prize:</th>
-                        <td>{{ $contest->runner_up_prize }}</td>
-                    </tr>
-                    <tr>
                         <th>Total Winners:</th>
                         <td>{{ $contest->contestDetails->total_winners }}</td>
-                    </tr>
-                    <tr>
-                        <th>Total Runner-ups:</th>
-                        <td>{{ $contest->contestDetails->total_runner_ups }}</td>
                     </tr>
                     <tr>
                         <th>Participants Limit:</th>

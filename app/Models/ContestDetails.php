@@ -11,7 +11,7 @@ class ContestDetails extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['contest_id', 'total_winners', 'total_runner_ups', 'participants_limit', 'start_date', 'end_date', 'entry_fee'];
+    protected $guarded = [];
 
     protected $casts = [
         'start_date' => 'datetime',

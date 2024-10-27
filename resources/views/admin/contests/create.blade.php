@@ -11,22 +11,12 @@
         <div class="block-content block-content-full">
           <div class="row">
 
-              <div class="form-group col-md-4 mb-4">
+              <div class="form-group col-md-6 mb-4">
                   <label class="form-label" for="title">Contest Title <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="title" name="title" required>
               </div>
 
-              <div class="form-group col-md-3 mb-4">
-                <label class="form-label" for="start_date">Start Date<span class="text-danger">*</span></label>
-                <input type="text" class="js-flatpickr form-control" id="start_date" name="start_date" placeholder="Y-m-d">
-              </div>
-              
-              <div class="form-group col-md-3 mb-4">
-                  <label class="form-label" for="end_date">End Date<span class="text-danger">*</span></label>
-                  <input type="text" class="js-flatpickr form-control" id="end_date" name="end_date" placeholder="Y-m-d">
-              </div>
-
-              <div class="form-group col-md-2 mb-4">
+              <div class="form-group col-md-6 mb-4">
                 <label class="form-label" for="status">Contest Status <span class="text-danger">*</span></label>
                 <select class="js-select2 form-select" id="status" name="status" style="width: 100%;" data-placeholder="Select Status">
                   <option></option>
@@ -35,30 +25,26 @@
                 </select>
               </div>
 
-              <div class="form-group col-md-2 mb-4">
+              <div class="form-group col-md-3 mb-4">
                   <label class="form-label" for="winner_prize">Winner Prize <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="winner_prize" name="winner_prize" required>
               </div>
 
-              <div class="form-group col-md-2 mb-4">
-                  <label class="form-label" for="runner_up_prize">Runner-up Prize <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="runner_up_prize" name="runner_up_prize" required>
-              </div>
 
-              <div class="form-group col-md-2 mb-4">
+              <div class="form-group col-md-3 mb-4">
                   <label class="form-label" for="total_winners">Total Winners <span class="text-danger">*</span></label>
                   <input type="number" class="form-control" id="total_winners" name="total_winners" required>
               </div>
 
-              <div class="form-group col-md-2 mb-4">
-                  <label class="form-label" for="total_runner_ups">Total Runner-ups <span class="text-danger">*</span></label>
-                  <input type="number" class="form-control" id="total_runner_ups" name="total_runner_ups" required>
-              </div>
-
               
-            <div class="form-group col-md-2 mb-4">
+            <div class="form-group col-md-3 mb-4">
                 <label class="form-label" for="entry_fee">Entry Fee <span class="text-danger">*</span></label>
                 <input type="number" class="form-control" id="entry_fee" name="entry_fee" required>
+            </div>
+
+            <div class="form-group col-md-3 mb-4">
+                <label class="form-label" for="draw_date">Draw Date (OPTIONAL)</label>
+                <input type="text" class="js-flatpickr form-control" id="draw_date" name="draw_date" placeholder="Select Draw Date">
             </div>
 
             <div class="form-group col-12 mb-4">

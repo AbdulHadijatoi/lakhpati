@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class Contest extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'winner_prize', 'runner_up_prize','status'];
+    
+    protected $guarded = [];
 
     protected $with = ['contestDetails'];
 

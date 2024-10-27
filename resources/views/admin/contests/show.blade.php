@@ -19,28 +19,16 @@
                         <td>{{ $contest->winner_prize }}</td>
                     </tr>
                     <tr>
-                        <th>Runner-up Prize:</th>
-                        <td>{{ $contest->runner_up_prize }}</td>
-                    </tr>
-                    <tr>
                         <th>Total Winners:</th>
                         <td>{{ $contest->contestDetails?$contest->contestDetails->total_winners:'-' }}</td>
                     </tr>
                     <tr>
-                        <th>Total Runner-ups:</th>
-                        <td>{{ $contest->contestDetails?$contest->contestDetails->total_runner_ups:'-' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Start Date:</th>
-                        <td>{{ $contest->contestDetails?$contest->contestDetails->start_date:'-' }}</td>
-                    </tr>
-                    <tr>
-                        <th>End Date:</th>
-                        <td>{{ $contest->contestDetails?$contest->contestDetails->end_date:'-' }}</td>
-                    </tr>
-                    <tr>
                         <th>Entry Fee:</th>
                         <td>{{ $contest->contestDetails?$contest->contestDetails->entry_fee:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Draw Date:</th>
+                        <td>{{ $contest->draw_date??'-' }}</td>
                     </tr>
                     <tr>
                         <th>Description</th>

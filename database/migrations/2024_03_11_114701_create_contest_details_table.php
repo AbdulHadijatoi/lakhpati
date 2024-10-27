@@ -12,7 +12,6 @@ class CreateContestDetailsTable extends Migration
             $table->id();
             $table->foreignId('contest_id')->constrained()->onDelete('cascade');
             $table->integer('total_winners');
-            $table->integer('total_runner_ups');
             $table->integer('participants_limit');
             $table->dateTime('start_date');
             $table->dateTime('end_date');

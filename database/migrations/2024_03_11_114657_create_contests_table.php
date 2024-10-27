@@ -13,7 +13,6 @@ class CreateContestsTable extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('winner_prize');
-            $table->string('runner_up_prize');
             $table->timestamps();
         });
     }

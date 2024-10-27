@@ -15,7 +15,6 @@ class ContestFactory extends Factory
             'title' => $this->faker->sentence,
             'description' => $this->faker->sentence,
             'winner_prize' => $this->faker->sentence,
-            'runner_up_prize' => $this->faker->sentence,
         ];
     }
 }

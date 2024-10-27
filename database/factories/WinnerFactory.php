@@ -17,7 +17,6 @@ class WinnerFactory extends Factory
             'contest_id' => Contest::factory(),
             'participant_id' => Participant::factory(),
             'is_winner' => $this->faker->boolean,
-            'is_runner_up' => $this->faker->boolean,
         ];
     }
 }

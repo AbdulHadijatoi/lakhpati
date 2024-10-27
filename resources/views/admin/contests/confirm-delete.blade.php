@@ -9,12 +9,8 @@
         <div class="block-content block-content-full">
             <p>Are you sure you want to delete the contest?</p>
             <p><strong>Winner Prize:</strong> {{ $contest->winner_prize }}</p>
-            <p><strong>Runner-up Prize:</strong> {{ $contest->runner_up_prize }}</p>
-            <p><strong>Total Winners:</strong> {{ $contest->contestDetails->total_winners }}</p>
-            <p><strong>Total Runner-ups:</strong> {{ $contest->contestDetails->total_runner_ups }}</p>
-            <p><strong>Start Date:</strong> {{ $contest->contestDetails->start_date }}</p>
-            <p><strong>End Date:</strong> {{ $contest->contestDetails->end_date }}</p>
             <p><strong>Entry Fee:</strong> {{ $contest->contestDetails->entry_fee }}</p>
+            <p><strong>Draw Date:</strong> {{ $contest->draw_date }}</p>
             <form action="{{ route('deleteContest', $contest->id) }}" method="POST">
                 @csrf
                 @method('DELETE')

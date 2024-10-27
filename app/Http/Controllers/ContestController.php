@@ -15,8 +15,7 @@ class ContestController extends Controller
 
         $contests = Contest::with('contestDetails')
                     ->when($search, function ($query) use ($search) {
-                        $query->where('winner_prize', 'like', "%$search%")
-                              ->orWhere('runner_up_prize', 'like', "%$search%");
+                        $query->where('winner_prize', 'like', "%$search%");
                     })
                     ->paginate($perPage);
 
@@ -40,7 +39,6 @@ class ContestController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'winner_prize' => 'required',
-            'runner_up_prize' => 'required',
             // Add more validation rules as needed
         ]);
 
@@ -48,9 +46,9 @@ class ContestController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $contest = Contest::create($request->only('winner_prize', 'runner_up_prize'));
+        $contest = Contest::create($request->only('winner_prize'));
 
-        $contest->contestDetails()->create($request->only('total_winners', 'total_runner_ups', 'start_date', 'end_date', 'entry_fee'));
+        $contest->contestDetails()->create($request->only('entry_fee'));
 
         return redirect()->route('listContests')->with('success', 'Contest created successfully!');
     }
@@ -68,10 +66,10 @@ class ContestController extends Controller
         $contest = Contest::with("contestDetails")->find($id);
         abort_if(!$contest, 404, "Contest not found");
 
-        $contest->update($request->only('winner_prize', 'runner_up_prize'));
+        $contest->update($request->only('winner_prize'));
         
         $contestDetails = $contest->contestDetails;
-        $contestDetails->update($request->only('total_winners', 'total_runner_ups', 'start_date', 'end_date', 'entry_fee'));
+        $contestDetails->update($request->only('entry_fee'));
 
         return redirect()->route('listContests')->with('success', 'Contest updated successfully!');
     }
@@ -79,6 +77,15 @@ class ContestController extends Controller
     public function confirmDelete($id)
     {
         $contest = Contest::with("contestDetails")->find($id);
+        abort_if(!$contest, 404, "Contest not found");
+
+        return view('admin.contests.confirm-delete', compact('contest'));
+    }
+    
+    public function announceWinners($id)
+    {
+        $contest = Contest::with("contestDetails")->find($id);
+        return $contest;
         abort_if(!$contest, 404, "Contest not found");
 
         return view('admin.contests.confirm-delete', compact('contest'));

@@ -40,13 +40,10 @@
                         <tr>
                             <th class="text-center" style="width: 80px;">#</th>
                             <th>Title</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
                             <th>Winner Prize</th>
-                            <th>Runner-up Prize</th>
                             <th>Total Winners</th>
-                            <th>Total Runner-ups</th>
                             <th>Entry Fee</th>
+                            <th>Draw Date</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -56,13 +53,10 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $contest->title }}</td>
-                            <td>{{ $contest->contestDetails?$contest->contestDetails->start_date:'-' }}</td>
-                            <td>{{ $contest->contestDetails?$contest->contestDetails->end_date:'-' }}</td>
                             <td>{{ $contest->winner_prize }}</td>
-                            <td>{{ $contest->runner_up_prize }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->total_winners:'-' }}</td>
-                            <td>{{ $contest->contestDetails?$contest->contestDetails->total_runner_ups:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->entry_fee:'-' }}</td>
+                            <td>{{ $contest->draw_date??'-' }}</td>
                             <td>
                                 @if($contest->status)
                                     @if($contest->status == "open")
@@ -74,13 +68,19 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('editContest', $contest->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Edit"><i class="fa fa-pen"></i></a>
-                                <a href="{{ route('showContest', $contest->id) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="View"><i class="fa fa-eye"></i></a>
                                 <form action="{{ route('deleteContest', $contest->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this contest?')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Delete"><i class="fa fa-trash"></i></button>
                                 </form>
+                                <a href="{{ route('editContest', $contest->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Edit"><i class="fa fa-pen"></i></a>
+                                <a href="{{ route('showContest', $contest->id) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="View"><i class="fa fa-eye"></i></a>
+                                @if($contest->status != 'closed')
+                                <form action="{{ route('announceWinners', $contest->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <button class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Announce Winner" onclick="return confirm('Are you sure you want to close this contest?')"><i class="fa fa-award"></i></button>
+                                </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

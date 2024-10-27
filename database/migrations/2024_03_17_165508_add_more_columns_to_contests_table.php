@@ -16,7 +16,7 @@ class AddMoreColumnsToContestsTable extends Migration
         Schema::table('contests', function (Blueprint $table) {
             $table->string("title")->nullable()->after("id");
             $table->text("description")->nullable()->after("name");
-            $table->string("status")->nullable()->after("runner_up_prize");
+            $table->string("status")->nullable()->after("description");
         });
     }
 

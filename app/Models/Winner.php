@@ -11,7 +11,7 @@ class Winner extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['contest_id', 'participant_id', 'is_winner', 'is_runner_up'];
+    protected $guarded = [];
     protected $dates = ['deleted_at'];
 
     public function contest(): BelongsTo

@@ -16,8 +16,7 @@ class PaymentController extends Controller
 
         $payments = Payment::with(['user','contest'])
                     // ->when($search, function ($query) use ($search) {
-                    //     $query->where('winner_prize', 'like', "%$search%")
-                    //           ->orWhere('runner_up_prize', 'like', "%$search%");
+                    //     $query->where('winner_prize', 'like', "%$search%");
                     // })
                     ->paginate($perPage);
 
