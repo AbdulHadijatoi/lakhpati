@@ -25,7 +25,15 @@
 
 @section('content')
 
-
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @elseif(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="content2 p-4">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
@@ -42,6 +50,8 @@
                             <th>Title</th>
                             <th>Winner Prize</th>
                             <th>Total Winners</th>
+                            <th>Total 2nd Winners</th>
+                            <th>Total 3rd Winners</th>
                             <th>Entry Fee</th>
                             <th>Draw Date</th>
                             <th>Status</th>
@@ -55,6 +65,8 @@
                             <td>{{ $contest->title }}</td>
                             <td>{{ $contest->winner_prize }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->total_winners:'-' }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->total_second_winners:'-' }}</td>
+                            <td>{{ $contest->contestDetails?$contest->contestDetails->total_third_winners:'-' }}</td>
                             <td>{{ $contest->contestDetails?$contest->contestDetails->entry_fee:'-' }}</td>
                             <td>{{ $contest->draw_date??'-' }}</td>
                             <td>
@@ -76,11 +88,22 @@
                                 <a href="{{ route('editContest', $contest->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Edit"><i class="fa fa-pen"></i></a>
                                 <a href="{{ route('showContest', $contest->id) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="View"><i class="fa fa-eye"></i></a>
                                 @if($contest->status != 'closed')
-                                <form action="{{ route('announceWinners', $contest->id) }}" method="POST" style="display: inline;">
+                                <form action="{{ route('announceWinners', $contest->id) }}" method="POST" style="display: inline;"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Announce Winners">
                                     @csrf
-                                    <button class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Announce Winner" onclick="return confirm('Are you sure you want to close this contest?')"><i class="fa fa-award"></i></button>
+                                    <button class="btn btn-sm btn-success" onclick="return confirm('Are you sure you want to announce winners for this contest?')">
+                                        <i class="fa fa-award"></i>
+                                    </button>
                                 </form>
                                 @endif
+                                
+                                @if($contest->status == 'closed' && $contest->winners_announced == 1)
+                                <form action="{{ route('announceWinners.index', $contest->id) }}" method="GET" style="display: inline;">
+                                    <button class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="List Winners">
+                                        <i class="fa fa-list"></i>
+                                    </button>
+                                </form>
+                                @endif
+
                             </td>
                         </tr>
                         @endforeach

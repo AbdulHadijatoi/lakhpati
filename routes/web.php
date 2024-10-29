@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WinnerController;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,8 +43,10 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [ContestController::class,'store'])->name('contestStore');
         Route::get('edit/{id}', [ContestController::class,'edit'])->name('editContest');
         Route::put('update/{id}', [ContestController::class,'update'])->name('updateContest');
-        Route::post('announce-winners/{id}', [ContestController::class,'announceWinners'])->name('announceWinners');
         Route::delete('delete/{id}', [ContestController::class, 'destroy'])->name('deleteContest');
+        
+        Route::post('announce-winners/{contest_id}', [WinnerController::class,'announceWinners'])->name('announceWinners');
+        Route::get('announce-winners/{contest_id}/list', [WinnerController::class,'index'])->name('announceWinners.index');
     });
     // listContestParticipants
     Route::group(['prefix'=>'participants'], function () {

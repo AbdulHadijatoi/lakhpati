@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contest;
+use App\Models\Participant;
+use App\Models\Winner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -77,15 +79,6 @@ class ContestController extends Controller
     public function confirmDelete($id)
     {
         $contest = Contest::with("contestDetails")->find($id);
-        abort_if(!$contest, 404, "Contest not found");
-
-        return view('admin.contests.confirm-delete', compact('contest'));
-    }
-    
-    public function announceWinners($id)
-    {
-        $contest = Contest::with("contestDetails")->find($id);
-        return $contest;
         abort_if(!$contest, 404, "Contest not found");
 
         return view('admin.contests.confirm-delete', compact('contest'));

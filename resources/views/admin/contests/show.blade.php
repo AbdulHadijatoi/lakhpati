@@ -19,8 +19,26 @@
                         <td>{{ $contest->winner_prize }}</td>
                     </tr>
                     <tr>
+                        <th>2nd Winner Prize:</th>
+                        <td>{{ $contest->second_winner_prize }}</td>
+                    </tr>
+                    <tr>
+                        <th>3rd Winner Prize:</th>
+                        <td>{{ $contest->third_winner_prize }}</td>
+                    </tr>
+                    <tr>
                         <th>Total Winners:</th>
                         <td>{{ $contest->contestDetails?$contest->contestDetails->total_winners:'-' }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Total 2nd Winners:</th>
+                        <td>{{ $contest->contestDetails?$contest->contestDetails->total_second_winners:'-' }}</td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Total 3rd Winners:</th>
+                        <td>{{ $contest->contestDetails?$contest->contestDetails->total_third_winners:'-' }}</td>
                     </tr>
                     <tr>
                         <th>Entry Fee:</th>

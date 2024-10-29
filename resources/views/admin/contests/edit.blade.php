@@ -33,6 +33,26 @@
                   <label class="form-label" for="total_winners">Total Winners <span class="text-danger">*</span></label>
                   <input type="number" class="form-control" id="total_winners" name="total_winners" value="{{ $contest->contestDetails->total_winners }}" required>
               </div>
+              
+              <div class="form-group col-md-3 mb-4">
+                  <label class="form-label" for="second_winner_prize">2nd Winner Prize <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="second_winner_prize" name="second_winner_prize" value={{ $contest->second_winner_prize }} required>
+              </div>
+
+              <div class="form-group col-md-3 mb-4">
+                  <label class="form-label" for="total_second_winners">Total 2nd Winners <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="total_second_winners" name="total_second_winners" value="{{ $contest->contestDetails->total_second_winners }}" required>
+              </div>
+              
+              <div class="form-group col-md-3 mb-4">
+                  <label class="form-label" for="third_winner_prize">3rd Winner Prize <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="third_winner_prize" name="third_winner_prize" value={{ $contest->third_winner_prize }} required>
+              </div>
+
+              <div class="form-group col-md-3 mb-4">
+                  <label class="form-label" for="total_third_winners">Total 3rd Winners <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="total_third_winners" name="total_third_winners" value="{{ $contest->contestDetails->total_third_winners }}" required>
+              </div>
 
               <div class="form-group col-md-3 mb-4">
                   <label class="form-label" for="entry_fee">Entry Fee <span class="text-danger">*</span></label>
