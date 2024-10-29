@@ -2,6 +2,15 @@
 
 @section('content')
   <div class="content2 p-4">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @elseif(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <form action="{{ route('contestStore') }}" method="POST">
       @csrf
       <div class="block block-rounded">
@@ -27,7 +36,7 @@
 
               <div class="form-group col-md-3 mb-4">
                   <label class="form-label" for="winner_prize">Winner Prize <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="winner_prize" name="winner_prize" required>
+                  <input type="number" class="form-control" id="winner_prize" name="winner_prize" required>
               </div>
 
 
@@ -38,7 +47,7 @@
 
               <div class="form-group col-md-3 mb-4">
                   <label class="form-label" for="second_winner_prize">2nd Winner Prize <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="second_winner_prize" name="second_winner_prize" required>
+                  <input type="number" class="form-control" id="second_winner_prize" name="second_winner_prize" required>
               </div>
 
               <div class="form-group col-md-3 mb-4">
@@ -48,7 +57,7 @@
 
               <div class="form-group col-md-3 mb-4">
                   <label class="form-label" for="third_winner_prize">3rd Winner Prize <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="third_winner_prize" name="third_winner_prize" required>
+                  <input type="number" class="form-control" id="third_winner_prize" name="third_winner_prize" required>
               </div>
               
               <div class="form-group col-md-3 mb-4">

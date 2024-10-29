@@ -79,7 +79,10 @@ class WinnerController extends Controller
         }
 
         // Update contest status to "closed" and set winners_announced to true
-        $contest->update(['status' => 'closed', 'winners_announced' => 1]);
+        $contest->update([
+            'status' => 'closed',
+            'winners_announced' => 1
+        ]);
 
         return redirect()->back()->with('success', 'Winners have been announced successfully!');
     }

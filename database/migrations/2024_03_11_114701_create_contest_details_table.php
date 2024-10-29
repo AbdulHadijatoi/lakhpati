@@ -13,8 +13,8 @@ class CreateContestDetailsTable extends Migration
             $table->foreignId('contest_id')->constrained()->onDelete('cascade');
             $table->integer('total_winners');
             $table->integer('participants_limit');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->decimal('entry_fee', 8, 2);
             $table->timestamps();
             $table->softDeletes();
