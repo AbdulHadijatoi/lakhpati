@@ -25,6 +25,8 @@
                         <th class="text-center">#</th>
                         <th>Contest Title</th>
                         <th>Participant ID</th>
+                        <th>Participant Name</th>
+                        <th>Phone</th>
                         <th>Winner Rank</th>
                         <th>Prize</th>
                         <th>Date Announced</th>
@@ -36,6 +38,8 @@
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td>{{ $winner->contest->title }}</td>
                         <td>{{ $winner->participant_id }}</td>
+                        <td>{{ $winner->participant && $winner->participant->user ?$winner->participant->user->name:'-' }}</td>
+                        <td>{{ $winner->participant && $winner->participant->user ?$winner->participant->user->phone:'-' }}</td>
                         <td>
                             @if($winner->is_winner)
                                 1st Winner
