@@ -42,7 +42,6 @@ class ContestController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'winner_prize' => 'required|string',
-            'status' => 'required|string',
             'second_winner_prize' => 'required|integer',
             'third_winner_prize' => 'required|integer',
             'total_winners' => 'required|integer',
@@ -59,7 +58,7 @@ class ContestController extends Controller
 
         // Fields for the contests table
         $contestData = $request->only([
-            'title', 'winner_prize', 'status', 'description', 
+            'title', 'winner_prize', 'description', 
             'draw_date', 'second_winner_prize', 'third_winner_prize'
         ]);
 
@@ -68,6 +67,9 @@ class ContestController extends Controller
             'total_winners', 'start_date', 'end_date', 'entry_fee', 
             'total_second_winners', 'total_third_winners'
         ]);
+
+        $contestData['status'] = "open";
+        $contestDetailsData['start_date'] = now()->format('Y-m-d');
 
         // Create Contest
         $contest = Contest::create($contestData);
@@ -96,7 +98,6 @@ class ContestController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'winner_prize' => 'required|string',
-            'status' => 'required|string',
             'second_winner_prize' => 'required|integer',
             'third_winner_prize' => 'required|integer',
             'total_winners' => 'required|integer',

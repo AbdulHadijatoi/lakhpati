@@ -20,18 +20,22 @@
         </div>
         <div class="block-content block-content-full">
           <div class="row">
-              <div class="form-group col-md-6 mb-4">
+              <div class="form-group col-md-8 mb-4">
                   <label class="form-label" for="title">Contest Title <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="title" name="title" value="{{ $contest->title }}" required>
               </div>
 
-              <div class="form-group col-md-6 mb-4">
+              <div class="form-group col-md-4 mb-4">
+                  <label class="form-label" for="entry_fee">Entry Fee <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="entry_fee" name="entry_fee" value="{{ $contest->contestDetails->entry_fee }}" required>
+              </div>
+              {{-- <div class="form-group col-md-6 mb-4">
                 <label class="form-label" for="status">Contest Status <span class="text-danger">*</span></label>
                 <select class="js-select2 form-select" id="status" name="status" style="width: 100%;" data-placeholder="Select Status">
                   <option value="open" {{ $contest->status == 'open' ? 'selected' : '' }}>Open</option>
                   <option value="closed" {{ $contest->status == 'closed' ? 'selected' : '' }}>Closed</option>
                 </select>
-              </div>
+              </div> --}}
 
               <div class="form-group col-md-3 mb-4">
                   <label class="form-label" for="winner_prize">Winner Prize <span class="text-danger">*</span></label>
@@ -63,10 +67,7 @@
                   <input type="number" class="form-control" id="total_third_winners" name="total_third_winners" value="{{ $contest->contestDetails->total_third_winners }}" required>
               </div>
 
-              <div class="form-group col-md-3 mb-4">
-                  <label class="form-label" for="entry_fee">Entry Fee <span class="text-danger">*</span></label>
-                  <input type="number" class="form-control" id="entry_fee" name="entry_fee" value="{{ $contest->contestDetails->entry_fee }}" required>
-              </div>
+              
 
               <div class="form-group col-md-3 mb-4">
                   <label class="form-label" for="draw_date">Draw Date</label>

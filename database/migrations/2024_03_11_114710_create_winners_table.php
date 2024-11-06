@@ -12,7 +12,7 @@ class CreateWinnersTable extends Migration
             $table->id();
             $table->foreignId('contest_id')->constrained()->onDelete('cascade');
             $table->foreignId('participant_id')->constrained()->onDelete('cascade');
-            $table->boolean('is_winner')->default(1);
+            $table->boolean('is_winner')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

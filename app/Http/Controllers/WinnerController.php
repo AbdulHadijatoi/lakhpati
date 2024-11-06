@@ -53,6 +53,7 @@ class WinnerController extends Controller
         $firstWinners = $participants->take($totalWinners);
         $secondWinners = $participants->skip($totalWinners)->take($totalSecondWinners);
         $thirdWinners = $participants->skip($totalWinners + $totalSecondWinners)->take($totalThirdWinners);
+        return $thirdWinners;
 
         foreach ($firstWinners as $winner) {
             Winner::create([
@@ -79,10 +80,22 @@ class WinnerController extends Controller
         }
 
         // Update contest status to "closed" and set winners_announced to true
-        $contest->update([
+        $updateData = [
             'status' => 'closed',
             'winners_announced' => 1
-        ]);
+        ];
+
+        if(!$contest->draw_date){
+            $updateData['draw_date'] = now()->format("Y-m-d");
+        }
+
+        if($contest->contestDetails){
+            $contest->contestDetails->update([
+                'end_date' => now()->format("Y-m-d"),
+            ]);
+        }
+
+        $contest->update($updateData);
 
         return redirect()->back()->with('success', 'Winners have been announced successfully!');
     }
