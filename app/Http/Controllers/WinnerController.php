@@ -53,7 +53,7 @@ class WinnerController extends Controller
         $firstWinners = $participants->take($totalWinners);
         $secondWinners = $participants->skip($totalWinners)->take($totalSecondWinners);
         $thirdWinners = $participants->skip($totalWinners + $totalSecondWinners)->take($totalThirdWinners);
-        return $thirdWinners;
+
 
         foreach ($firstWinners as $winner) {
             Winner::create([
