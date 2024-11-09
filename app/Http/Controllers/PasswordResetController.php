@@ -82,7 +82,8 @@ class PasswordResetController extends Controller
 
         // Validate input data
         $validator = Validator::make($request->all(), [
-            'password' => 'nullable|min:8',
+            'password' => 'required|min:8',
+            'user_id' => 'required|exists:users,id',
         ]);
 
         if ($validator->fails()) {
