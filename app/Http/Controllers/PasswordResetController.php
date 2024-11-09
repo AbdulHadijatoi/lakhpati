@@ -32,7 +32,10 @@ class PasswordResetController extends Controller
                 ->subject('Password Reset OTP');
         });
 
-        return response()->json(['message' => 'OTP sent to email.'], 200);
+        return response()->json([
+            'message' => 'OTP sent to email.',
+            'otp' => $otp
+        ], 200);
     }
 
     // Verify OTP
