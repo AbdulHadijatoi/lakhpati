@@ -7,6 +7,7 @@ use App\Models\OtpVerification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Exception;
 
 class PasswordResetController extends Controller
 {
@@ -27,10 +28,14 @@ class PasswordResetController extends Controller
         );
 
         // Send OTP email
-        Mail::raw("Your password reset OTP is: $otp", function ($message) use ($request) {
-            $message->to($request->email)
-                ->subject('Password Reset OTP');
-        });
+        try{
+            Mail::raw("Your password reset OTP is: $otp", function ($message) use ($request) {
+                $message->to($request->email)
+                    ->subject('Password Reset OTP');
+            });
+        }catch(Exception $e){
+            // some message
+        }
 
         return response()->json([
             'message' => 'OTP sent to email.',
