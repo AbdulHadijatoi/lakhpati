@@ -21,6 +21,6 @@ class Winner extends Model
 
     public function participant(): BelongsTo
     {
-        return $this->belongsTo(Participant::class);
+        return $this->belongsTo(Participant::class)->where('status', 1);
     }
 }

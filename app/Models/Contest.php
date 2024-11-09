@@ -30,7 +30,7 @@ class Contest extends Model
     
     public function participants()
     {
-        return $this->hasMany(Participant::class,'contest_id');
+        return $this->hasMany(Participant::class,'contest_id')->where('status', 1);
     }
 
     // Accessor for total number of participants

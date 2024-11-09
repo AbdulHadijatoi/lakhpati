@@ -33,4 +33,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Participant::class);
     }
+
+    public function refunds()
+    {
+        return $this->hasMany(Refund::class);
+    }
 }

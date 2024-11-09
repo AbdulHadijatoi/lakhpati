@@ -55,11 +55,19 @@
                     </a>
                 </li>
 
-                <li class="nav-main-heading">Refund Requests</li>
+                <li class="nav-main-heading">Refund</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('participants') ? ' active' : '' }}" href="#">
+                    <a href="{{ route('refunds.index') }}" class="nav-main-link{{ request()->is('refunds') ? ' active' : '' }}" href="#">
                         <i class="nav-main-link-icon fa fa-undo"></i>
-                        <span class="nav-main-link-name">Refund Requests List</span>
+                        <span class="nav-main-link-name">Refund Users</span>
+                    </a>
+                </li>
+                
+                <li class="nav-main-heading">Settings</li>
+                <li class="nav-main-item">
+                    <a href="{{ route('settings.index') }}" class="nav-main-link{{ request()->is('settings') ? ' active' : '' }}" href="#">
+                        <i class="nav-main-link-icon fa fa-wrench"></i>
+                        <span class="nav-main-link-name">Settings</span>
                     </a>
                 </li>
                 {{-- <li class="nav-main-item" disabled>

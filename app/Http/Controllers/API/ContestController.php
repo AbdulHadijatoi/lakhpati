@@ -33,6 +33,7 @@ class ContestController extends AppBaseController {
         $user = Auth::user();
         $data = Participant::with('user','contest')
                 ->where('user_id', $user->id)
+                ->where('status', 1)
                 ->get();
 
         return $this->sendDataResponse($data);
@@ -84,6 +85,7 @@ class ContestController extends AppBaseController {
     
         // Check if the user has already participated in the contest
         $existingParticipation = Participant::where('user_id', $user->id)
+                                            ->where('status', 1)
                                             ->where('contest_id', $request->contest_id)
                                             ->first();
     
@@ -102,6 +104,31 @@ class ContestController extends AppBaseController {
 
         return $this->sendDataResponse($data);
     }
+    
+    // public function requestRefund(Request $request) {
+
+    //     $user = Auth::user();
+    
+    //     // Check if the user has already participated in the contest
+    //     $existingParticipation = Participant::where('user_id', $user->id)
+    //                                         ->where('contest_id', $request->contest_id)
+    //                                         ->first();
+    
+    //     if ($existingParticipation) {
+    //         return $this->sendError('You have already participated in this contest.');
+    //     }
+    
+    //     // Create a new participation record
+    //     $participation = Participant::create([
+    //         'user_id' => $user->id,
+    //         'contest_id' => $request->contest_id,
+    //     ]);
+    //     $data = [
+    //         'ticket_number' => $participation->id,
+    //     ];
+
+    //     return $this->sendDataResponse($data);
+    // }
     
     
 }

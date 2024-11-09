@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RefundController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\WinnerController;
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -58,6 +60,23 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix'=>'payments'], function () {
         Route::get('/', [PaymentController::class,'index'])->name('payments.index');
     });
+    
+    Route::group(['prefix'=>'refunds'], function () {
+        Route::get('/', [RefundController::class, 'index'])->name('refunds.index');
+        Route::post('/{user}/approve', [RefundController::class, 'refundUser'])->name('refundUser');
+        Route::post('/search-user', [RefundController::class, 'searchUserForRefund'])->name('refund.searchUser');
+        Route::post('/create-refund', [RefundController::class, 'store'])->name('refund.store');
+    });
+
+    Route::prefix('settings')->group(function () {
+        Route::get('/', [SettingController::class, 'index'])->name('settings.index');
+        Route::get('/create', [SettingController::class, 'create'])->name('settings.create');
+        Route::post('/', [SettingController::class, 'store'])->name('settings.store');
+        Route::get('/{key}/edit', [SettingController::class, 'edit'])->name('settings.edit');
+        Route::put('/{key}', [SettingController::class, 'update'])->name('settings.update');
+        Route::delete('/{key}', [SettingController::class, 'destroy'])->name('settings.destroy');
+    });
+
 
     Route::post('logout', [LoginController::class,'logout'])->name('logout');
 });
