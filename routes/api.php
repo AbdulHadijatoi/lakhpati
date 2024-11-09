@@ -28,6 +28,7 @@ Route::group(['prefix' => 'v1'], function() {
 
     Route::post('/send-reset-otp', [PasswordResetController::class, 'sendOtp'])->name('send.reset.otp');
     Route::post('/verify-otp', [PasswordResetController::class, 'verifyOtp'])->name('verify.reset.otp');
+    Route::post('/change-password', [PasswordResetController::class, 'changePassword']);
     
     Route::get('terms-and-conditions', [HomeController::class, 'getTermsConditions']);
 

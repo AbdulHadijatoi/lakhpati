@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\OtpVerification;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 
 class PasswordResetController extends Controller
 {
@@ -66,6 +68,45 @@ class PasswordResetController extends Controller
         $otpVerification->verified = true;
         $otpVerification->save();
 
-        return response()->json(['message' => 'OTP verified successfully.'], 200);
+        $user = User::where('email', $request->email)->first();
+        return response()->json([
+            'message' => 'OTP verified successfully.',
+            'user' => $user
+        ], 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        // Get the currently authenticated user
+        
+
+        // Validate input data
+        $validator = Validator::make($request->all(), [
+            'password' => 'nullable|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
+        $user = User::find($request->user_id);
+
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        // Save the updated user
+        $user->save();
+
+        $token = $user->createToken('LAKHPATI')->accessToken;
+
+        $data = [
+            'token' => $token,
+            'user' => $user
+        ];
+        return response()->json([
+            'message' => 'OTP verified successfully.',
+            $data
+        ], 200);
     }
 }
