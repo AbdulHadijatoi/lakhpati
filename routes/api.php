@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\ContestController;
 use App\Http\Controllers\API\EasypaisaController;
 use App\Http\Controllers\API\HomeController;
+use App\Http\Controllers\PasswordResetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,9 @@ Route::group(['prefix' => 'v1'], function() {
     Route::post('register', [AuthController::class, 'register']);
     // api/v1/easypaisa/checkout?contest_id=53
     // Authenticated user routes
+
+    Route::post('/send-reset-otp', [PasswordResetController::class, 'sendOtp'])->name('send.reset.otp');
+    Route::post('/verify-otp', [PasswordResetController::class, 'verifyOtp'])->name('verify.reset.otp');
     
     Route::get('terms-and-conditions', [HomeController::class, 'getTermsConditions']);
 
